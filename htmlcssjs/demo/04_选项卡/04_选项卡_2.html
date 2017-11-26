@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ol,ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #container{
+            width: 400px;
+            height: 300px;
+
+            margin: 100px auto;
+        }
+        #tab li{
+            width: 120px;
+            height: 30px;
+            background: #999;
+            color: white;
+            float: left;
+            margin-right: 12px;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;/*鼠标样式*/
+
+        }
+        #tab{
+            /*height: 30px*/
+            overflow:  hidden;/*清除浮动带来的宽高丢失情况，技巧 解决塌陷问题*/
+        }
+        #content{
+            height: 270px;
+            background-color: red;
+            border-top: 1px solid #000000;
+        }
+        #tab .selected{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <ul id="tab" onselectstart="return false">
+        <li  class="selected">HTML</li>
+        <li>CSS</li>
+        <li>JAVASCRIPT</li>
+    </ul>
+    <div id="content">
+        模拟页面一
+    </div>
+</div>
+
+
+<script>
+    var data =["模拟页面一","模拟页面二","模拟页面三"]
+    var oTab = document.getElementById('tab');
+    var aLi = oTab.getElementsByTagName('li');/*或者是 oTab.children*/
+    var oContent = document.getElementById('content');
+    for(var i = 0; i < aLi.length; i++){
+        aLi[i].index = i;//创建一个属性把这个索引放到这个属性里面，后面再拿出来用
+        aLi[i].onclick = function () {
+            for(var i = 0; i < aLi.length; i++){
+                aLi[i].className=' ';
+            }
+            this.className = 'selected';
+
+            oContent.innerHTML =  data[this.index];
+        }
+        /*这里的两个i不是在一个时间执行的，第一个是在页面打开就开始执行，第二个是在点击后执行，不会影响*/
+    }
+</script>
+</body>
+</html>
