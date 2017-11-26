@@ -29,8 +29,8 @@
             border-bottom: 1px dotted #8e8e8e;
             font-size: 13px;
         }
-        #menu .sub-menu a{
-
+        #menu .sub-menu a:hover{
+            background-color: #e6ca00;
         }
     </style>
 </head>
@@ -64,5 +64,31 @@
         </ul>
     </li>
 </ul>
+
+<!--js代码-->
+<script>
+    var oUl = document.getElementById("menu");
+   // var aLi = oUl.getElementsByClassName("main-menu"); IE6不支持
+
+
+    var aLi = oUl.getElementsByTagName("li");//获取到了15个li 3个class="main-menu",取出来的是12个li，都是对象
+    for(var i = 0; i < aLi.length; i++){
+        if(aLi[i].className == 'main-menu'){
+            aLi[i].onmouseover = function () {//给这个li绑定了一个事件
+                var aUl = this.getElementsByTagName("ul");//返回的是数组,this就是谁调用了这个函数谁就是this此处是aLi[i]
+                var oMainMenu = aUl[0];
+                oMainMenu.style.display="block";
+               // this.getElementById()
+            }
+
+            aLi[i].onmouseout = function(){
+                var aUl = this.getElementsByTagName("ul");
+                var oMainMenu = aUl[0];
+                oMainMenu.style.display = "none";
+            }
+        }
+    }
+
+</script>
 </body>
 </html>
