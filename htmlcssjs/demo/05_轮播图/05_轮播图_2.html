@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图第一种</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ol,ul{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        #container{
+            width: 900px;
+            height: 500px;
+            background-color: red;
+            margin: 50px auto;
+            position: relative;
+        }
+        #tab{
+            /*元素定位了就会脱离文档流，会高于文档流 不会被覆盖  层级 可以设置 z-index:1*/
+            position: absolute;/*只有决对定位才会相对于父元素定位，前提是父元素使用了 position*/
+            bottom: 10px;/*距离父元素底部有10px像素*/
+            right: 10px;
+        }
+        #tab li{
+            float: left;
+            width: 20px;
+            height: 20px;
+            background-color: black;
+            color: white;
+            margin-right: 5px;
+            text-align:  center;
+            line-height: 20px;
+            cursor: pointer;
+
+        }
+        #tab li.selected{
+            background-color: orange;
+        }
+        #arrow{
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+        #arrow span{
+            height: 20px;
+            width: 20px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 20px;
+            float: left;
+
+        }
+
+        #content img{
+            clear: both;
+            width: 900px;
+            height: 500px;
+            float: left;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <ul id="tab">
+        <li class="selected">1</li>
+        <li >2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <div id="content">
+        <img class="selected" src="../../../img/lunbo_01.jpg" alt="轮播图1" title="轮播图1" style="width: 900px;">
+        <img src="../../../img/lunbo_02.jpg" alt="轮播图2" title="轮播图2">
+        <img src="../../../img/lunbo_03.jpg" alt="轮播图3" title="轮播图3">
+        <img src="../../../img/lunbo_04.jpg" alt="轮播图4" title="轮播图4">
+    </div>
+    <div id="arrow">
+        <span id="prev" onselectstart=" return false;">&lt;</span>
+        <span id="next" onselectstart=" return false;">&gt;</span>
+        <!--<a href="javascript:;">哈哈</a>--><!--点击后没效果-->
+    </div>
+</div><!--container end-->
+
+<!--js代码-->
+
+<script>
+    var oContainer = document.getElementById('container');
+    var aLi = oContainer.getElementsByTagName('li');
+
+    var oContent = document.getElementById('content');
+    var aImg = oContent.getElementsByTagName('img');
+    var oNext = document.getElementById("next");
+    var oPrev = document.getElementById("prev");
+
+    var iNow = 0;/*记录当前显示的索引*/
+
+    var timer;//返回定时器的id
+
+    oContent.style.width = aImg[0].style.width*aImg.length+'px';
+    for(var i  = 0; i < aLi.length; i++){
+        aLi[i].index = i;/*加索引*/
+        aLi[i].onmousemove = function () {
+            changeImg(this.index);
+            iNow = this.index;
+        }
+    }
+
+
+
+    /*切换图片的*/
+    function changeImg(index){
+        for(var j = 0; j < aLi.length; j++){/*先要清除所有的格式!!!!*/
+            aLi[j].className = ' ';
+            aImg[j].className = ' ';
+        }
+        aLi[index].className = 'selected';
+        aImg[index].className = 'selected';
+    }
+
+    /*上一页下一页*/
+    oNext.onclick = function () {
+        iNow++;
+        if(iNow<aLi.length && iNow >=0){
+            changeImg(iNow);
+        }else{
+            iNow=0;
+            changeImg(iNow);
+        }
+
+    }
+
+    oPrev.onclick = function () {
+        iNow--;
+        if(iNow<aLi.length && iNow >=0){
+            changeImg(iNow);
+        }else{
+            iNow=aLi.length-1;
+            changeImg(iNow);
+        }
+
+    }
+
+    /*定时器  定时轮播*/
+    timer = setInterval(function () {
+        oNext.onclick();/*直接点击下一步*/
+    },1000);//每隔0.5秒就会执行这个函数代码
+
+    /*清除定时器*/
+
+    oContainer.onmousemove = function () {
+        clearInterval(timer);
+    }/*鼠标移到图片的位置就清除掉定时器*/
+    oContainer.onmouseout = function () {
+        timer = setInterval(function () {
+            oNext.onclick();/*直接点击下一步*/
+        },1000);//每隔0.5秒就会执行这个函数代码
+    }
+
+</script>
+</body>
+</html>

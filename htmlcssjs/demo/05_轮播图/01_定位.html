@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定位</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        div {
+            width: 200px;
+            height: 100px;
+            float: left;
+        }
+
+        #a {
+            background-color: #f00;
+        }
+
+        #b {
+            background: #0f0;
+            /*position: relative;!*相对定位  只有设置了relative 后才能使用left和top定位  相对定位位置不会被释放*!
+            left: 20px;
+            top: 50px;*/
+        }
+
+        #c {
+            background: #00f;
+            position: fixed; /*绝对定位 位置会被释放掉，不会被保留*/
+            left: 20px;
+            top: 50px;
+        }
+        #content{
+            width: 800px;
+            height: 900px;
+            background: #b2b2b2;
+            margin: 50px 0 0 50px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="content">
+    <div id="a">
+        a
+    </div>
+    <div id="b">
+        b
+    </div>
+    <div id="c">
+        c
+    </div>
+</div>
+</body>
+</html>
+
+<!--
+    绝对定位 absolute 如果父元素没有使用定位就会相对于页面开始定位
+    如果父元素有定位，就会相对于父元素开始定位
+
+    相对定位: relative 就是相对于自己原来的位置定位，位置不释放
+
+    fixed：就是一直相对于浏览器定位  如广告位 导航 悬浮框
+-->
